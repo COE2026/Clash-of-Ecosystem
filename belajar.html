@@ -3,119 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Materi Pembelajaran - Clash of Ecosystem</title>
+    <title>Ruang Belajar - Clash Of Ecosystem</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* CSS Khusus Layout LMS */
-        .lms-wrapper {
-            display: flex;
-            min-height: 100vh;
-            margin-top: 20px;
-        }
-        .sidebar {
-            width: 300px;
-            background: var(--bg-card);
-            padding: 20px;
-            height: fit-content;
-            position: sticky;
-            top: 100px;
-            border-radius: 12px;
-        }
-        .main-content {
-            flex: 1;
-            padding: 0 30px;
-        }
-        .content-box {
-            background: white;
-            color: #333;
-            padding: 40px;
-            border-radius: 12px;
-            margin-bottom: 50px;
-        }
-        .sidebar h3 { color: var(--accent); margin-bottom: 15px; }
+        /* Gaya khusus untuk LMS */
+        .lms-container { display: grid; grid-template-columns: 250px 1fr; min-height: 80vh; margin-top: 20px; }
+        .sidebar { background: var(--bg-card); padding: 20px; border-right: 1px solid #ddd; }
+        .content-area { padding: 30px; background: #fff; }
         .sidebar ul { list-style: none; }
-        .sidebar li { margin-bottom: 10px; }
-        .sidebar a { color: var(--text-main); text-decoration: none; font-size: 0.9rem; }
-        .sidebar a:hover { color: var(--accent); }
-
+        .sidebar ul li { margin-bottom: 10px; }
+        .sidebar ul li a { text-decoration: none; color: var(--text-main); font-size: 0.9rem; }
+        .sidebar ul li a:hover { color: var(--primary); }
+        .bab-title { font-weight: bold; color: var(--primary); margin-top: 15px; display: block; }
+        .media-placeholder { background: #eee; width: 100%; height: 300px; display: flex; align-items: center; justify-content: center; margin: 20px 0; border-radius: 10px; }
+        
         @media (max-width: 768px) {
-            .lms-wrapper { flex-direction: column; }
-            .sidebar { width: 100%; position: static; margin-bottom: 20px; }
+            .lms-container { grid-template-columns: 1fr; }
         }
     </style>
 </head>
-<body style="background-color: var(--bg-dark);">
+<body>
 
     <nav class="navbar">
         <div class="container nav-container">
-            <div class="logo">Clash of Ecosystem</div>
-            <a href="index.html" style="color: var(--accent); text-decoration: none;">&larr; Kembali</a>
+            <a href="index.html" class="logo">← Kembali ke Landing Page</a>
         </div>
     </nav>
 
     <div class="container">
         <header style="padding: 40px 0; text-align: center;">
-            <h1>Materi Pembelajaran Ekosistem</h1>
-            <p style="color: var(--text-muted); margin-top: 10px;">Halaman pembelajaran ini berisi materi interaktif tentang ekosistem untuk siswa SMP/MTs kelas VII.</p>
+            <h1>Pusat Belajar Ekosistem</h1>
+            <p>Pelajari materi ekosistem langkah demi langkah secara mendalam.</p>
         </header>
 
-        <div class="lms-wrapper">
-            <!-- SIDEBAR MENU -->
+        <div class="lms-container">
             <aside class="sidebar">
-                <h3>Daftar Bab</h3>
+                <span class="bab-title">Bab 1: Mengenal Ekosistem</span>
                 <ul>
-                    <li><strong>Bab 1: Ekosistem</strong>
-                        <ul>
-                            <li><a href="#bab1">1.1 Pengertian Ekosistem</a></li>
-                        </ul>
-                    </li>
-                    <li><strong>Bab 2: Interaksi</strong>
-                        <ul>
-                            <li><a href="#bab2">2.1 Jenis Interaksi</a></li>
-                        </ul>
-                    </li>
-                    <li><strong>Bab 3: Rantai Makanan</strong>
-                        <ul>
-                            <li><a href="#">3.1 Jaring Makanan</a></li>
-                        </ul>
-                    </li>
+                    <li><a href="#">1.1 Apa itu Ekosistem?</a></li>
+                    <li><a href="#">1.2 Komponen Biotik & Abiotik</a></li>
+                </ul>
+
+                <span class="bab-title">Bab 2: Rantai Makanan</span>
+                <ul>
+                    <li><a href="#">2.1 Produsen & Konsumen</a></li>
+                    <li><a href="#">2.2 Jaring-jaring Makanan</a></li>
+                </ul>
+
+                <span class="bab-title">Bab 3: Keseimbangan Lingkungan</span>
+                <ul>
+                    <li><a href="#">3.1 Dampak Pencemaran</a></li>
+                    <li><a href="#">3.2 Upaya Pelestarian</a></li>
                 </ul>
             </aside>
 
-            <!-- AREA KONTEN UTAMA -->
-            <main class="main-content">
+            <main class="content-area">
+                <h2>1.1 Apa itu Ekosistem?</h2>
+                <p style="margin-top: 20px;">
+                    Ekosistem adalah hubungan timbal balik antara makhluk hidup dengan lingkungannya. 
+                    Di sini kamu akan belajar bagaimana satu makhluk hidup bergantung pada yang lain.
+                </p>
                 
-                <!-- BAB 1 -->
-                <article id="bab1" class="content-box">
-                    <h2>Bab 1: Ekosistem dan Komponen Penyusunnya</h2>
-                    <p>Silakan pelajari materi melalui presentasi interaktif di bawah ini:</p>
-                    <div style="position: relative; width: 100%; height: 0; padding-top: 56.25%; border-radius: 8px; overflow: hidden; margin: 20px 0;">
-                        <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none;" src="https://www.canva.com/design/DAHJCcLCze0/gUuVsYZ9laNDH8HiLvDLYg/view?embed" allowfullscreen></iframe>
-                    </div>
-                </article>
+                <div class="media-placeholder">
+                    <img src="https://i.ibb.co.com/v4pJFg4L/NAVIGASI-MATERI.png" alt="NAVIGASI MATERI" style="max-width: 100%; max-height: 100%;">
+                </div>
 
-                <!-- BAB 2 -->
-                <article id="bab2" class="content-box">
-                    <h2>Bab 2: Interaksi Antar Makhluk Hidup</h2>
-                    <p>Interaksi dalam ekosistem sangat penting untuk menjaga keseimbangan alam.</p>
-                    <div style="position: relative; width: 100%; height: 0; padding-top: 56.25%; border-radius: 8px; overflow: hidden; margin: 20px 0;">
-                        <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none;" src="https://www.canva.com/design/DAHJJwQ3RY8/_edAWWkfKRLRuY5Xt56Ftg/view?embed" allowfullscreen></iframe>
-                    </div>
-                </article>
-
-                <!-- PLACEHOLDER UNTUK BAB SELANJUTNYA -->
-                <article class="content-box" style="border: 2px dashed #ccc; background: #f9f9f9;">
-                    <h2 style="color: #999;">[Area Konten Bab Berikutnya]</h2>
-                    <p>Gunakan bagian ini untuk menambahkan Gambar, Video, atau Game Interaktif.</p>
-                </article>
-
+                <h3>Penjelasan Singkat</h3>
+                <p>Ekosistem terdiri dari dua komponen utama, yaitu komponen hidup (biotik) dan komponen tak hidup (abiotik)...</p>
+                
+                <div class="media-placeholder">
+                    <p>[ Area Embed Game / Video / Iframe ]</p>
+                </div>
             </main>
         </div>
     </div>
-
-    <footer class="footer">
-        <p>&copy; 2026 Tim Ilmuan Muda - Universitas Muhammadiyah Yogyakarta</p>
-    </footer>
 
 </body>
 </html>
