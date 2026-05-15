@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi Pembelajaran - Clash of Ecosystem</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* CSS Khusus Layout LMS */
+        .lms-wrapper {
+            display: flex;
+            min-height: 100vh;
+            margin-top: 20px;
+        }
+        .sidebar {
+            width: 300px;
+            background: var(--bg-card);
+            padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+            border-radius: 12px;
+        }
+        .main-content {
+            flex: 1;
+            padding: 0 30px;
+        }
+        .content-box {
+            background: white;
+            color: #333;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 50px;
+        }
+        .sidebar h3 { color: var(--accent); margin-bottom: 15px; }
+        .sidebar ul { list-style: none; }
+        .sidebar li { margin-bottom: 10px; }
+        .sidebar a { color: var(--text-main); text-decoration: none; font-size: 0.9rem; }
+        .sidebar a:hover { color: var(--accent); }
+
+        @media (max-width: 768px) {
+            .lms-wrapper { flex-direction: column; }
+            .sidebar { width: 100%; position: static; margin-bottom: 20px; }
+        }
+    </style>
+</head>
+<body style="background-color: var(--bg-dark);">
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">Clash of Ecosystem</div>
+            <a href="index.html" style="color: var(--accent); text-decoration: none;">&larr; Kembali</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header style="padding: 40px 0; text-align: center;">
+            <h1>Materi Pembelajaran Ekosistem</h1>
+            <p style="color: var(--text-muted); margin-top: 10px;">Halaman pembelajaran ini berisi materi interaktif tentang ekosistem untuk siswa SMP/MTs kelas VII.</p>
+        </header>
+
+        <div class="lms-wrapper">
+            <!-- SIDEBAR MENU -->
+            <aside class="sidebar">
+                <h3>Daftar Bab</h3>
+                <ul>
+                    <li><strong>Bab 1: Ekosistem</strong>
+                        <ul>
+                            <li><a href="#bab1">1.1 Pengertian Ekosistem</a></li>
+                        </ul>
+                    </li>
+                    <li><strong>Bab 2: Interaksi</strong>
+                        <ul>
+                            <li><a href="#bab2">2.1 Jenis Interaksi</a></li>
+                        </ul>
+                    </li>
+                    <li><strong>Bab 3: Rantai Makanan</strong>
+                        <ul>
+                            <li><a href="#">3.1 Jaring Makanan</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </aside>
+
+            <!-- AREA KONTEN UTAMA -->
+            <main class="main-content">
+                
+                <!-- BAB 1 -->
+                <article id="bab1" class="content-box">
+                    <h2>Bab 1: Ekosistem dan Komponen Penyusunnya</h2>
+                    <p>Silakan pelajari materi melalui presentasi interaktif di bawah ini:</p>
+                    <div style="position: relative; width: 100%; height: 0; padding-top: 56.25%; border-radius: 8px; overflow: hidden; margin: 20px 0;">
+                        <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none;" src="https://www.canva.com/design/DAHJCcLCze0/gUuVsYZ9laNDH8HiLvDLYg/view?embed" allowfullscreen></iframe>
+                    </div>
+                </article>
+
+                <!-- BAB 2 -->
+                <article id="bab2" class="content-box">
+                    <h2>Bab 2: Interaksi Antar Makhluk Hidup</h2>
+                    <p>Interaksi dalam ekosistem sangat penting untuk menjaga keseimbangan alam.</p>
+                    <div style="position: relative; width: 100%; height: 0; padding-top: 56.25%; border-radius: 8px; overflow: hidden; margin: 20px 0;">
+                        <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none;" src="https://www.canva.com/design/DAHJJwQ3RY8/_edAWWkfKRLRuY5Xt56Ftg/view?embed" allowfullscreen></iframe>
+                    </div>
+                </article>
+
+                <!-- PLACEHOLDER UNTUK BAB SELANJUTNYA -->
+                <article class="content-box" style="border: 2px dashed #ccc; background: #f9f9f9;">
+                    <h2 style="color: #999;">[Area Konten Bab Berikutnya]</h2>
+                    <p>Gunakan bagian ini untuk menambahkan Gambar, Video, atau Game Interaktif.</p>
+                </article>
+
+            </main>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 Tim Ilmuan Muda - Universitas Muhammadiyah Yogyakarta</p>
+    </footer>
+
+</body>
+</html>
