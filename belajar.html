@@ -1,82 +1,1255 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ruang Belajar - Clash Of Ecosystem</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        /* Gaya khusus untuk LMS */
-        .lms-container { display: grid; grid-template-columns: 250px 1fr; min-height: 80vh; margin-top: 20px; }
-        .sidebar { background: var(--bg-card); padding: 20px; border-right: 1px solid #ddd; }
-        .content-area { padding: 30px; background: #fff; }
-        .sidebar ul { list-style: none; }
-        .sidebar ul li { margin-bottom: 10px; }
-        .sidebar ul li a { text-decoration: none; color: var(--text-main); font-size: 0.9rem; }
-        .sidebar ul li a:hover { color: var(--primary); }
-        .bab-title { font-weight: bold; color: var(--primary); margin-top: 15px; display: block; }
-        .media-placeholder { background: #eee; width: 100%; height: 300px; display: flex; align-items: center; justify-content: center; margin: 20px 0; border-radius: 10px; }
-        
-        @media (max-width: 768px) {
-            .lms-container { grid-template-columns: 1fr; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Materi Pembelajaran Ekosistem – Clash of Ecosystem</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* =====================================================
+       Gaya tambahan khusus untuk belajar.html
+       (Tidak mengganggu style.css utama)
+       ===================================================== */
+
+    /* Layout utama halaman belajar: sidebar + konten */
+    .belajar-layout {
+      display: flex;
+      min-height: calc(100vh - var(--nav-height));
+      background: var(--bg-main);
+    }
+
+    /* ---- SIDEBAR ---- */
+    .sidebar {
+      width: 300px;
+      min-width: 260px;
+      background: var(--bg-card);
+      border-right: 1px solid var(--border);
+      padding: 28px 0;
+      position: sticky;
+      top: var(--nav-height);
+      height: calc(100vh - var(--nav-height));
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+
+    .sidebar-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--text-light);
+      text-transform: uppercase;
+      padding: 0 24px 12px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 12px;
+    }
+
+    /* Daftar bab di sidebar */
+    .bab-list {
+      list-style: none;
+    }
+
+    /* Setiap item bab (bisa diklik untuk expand subbab) */
+    .bab-item > .bab-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 24px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: var(--text-main);
+      transition: background 0.2s;
+      user-select: none;
+    }
+
+    .bab-item > .bab-header:hover {
+      background: var(--bg-section-alt);
+      color: var(--primary);
+    }
+
+    .bab-item > .bab-header.active-bab {
+      color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    /* Ikon panah kecil di setiap bab */
+    .bab-arrow {
+      font-size: 0.7rem;
+      transition: transform 0.25s;
+      color: var(--text-light);
+    }
+
+    .bab-item.open .bab-arrow {
+      transform: rotate(90deg);
+    }
+
+    /* Daftar subbab (tersembunyi secara default) */
+    .subbab-list {
+      list-style: none;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+      background: var(--bg-section-alt);
+    }
+
+    /* Saat bab terbuka, subbab tampil */
+    .bab-item.open .subbab-list {
+      max-height: 400px;
+    }
+
+    /* Link setiap subbab */
+    .subbab-link {
+      display: block;
+      padding: 8px 24px 8px 40px;
+      font-size: 0.83rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .subbab-link:hover {
+      color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .subbab-link.active-subbab {
+      color: var(--primary);
+      font-weight: 600;
+      background: var(--primary-light);
+      border-right: 3px solid var(--primary);
+    }
+
+    /* ---- TOMBOL TOGGLE SIDEBAR (mobile) ---- */
+    .sidebar-toggle {
+      display: none;
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 500;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      border-radius: 50%;
+      width: 52px;
+      height: 52px;
+      font-size: 1.3rem;
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* ---- AREA KONTEN UTAMA ---- */
+    .konten-area {
+      flex: 1;
+      padding: 48px 56px;
+      max-width: 860px;
+      overflow-y: auto;
+    }
+
+    /* Header halaman belajar */
+    .konten-header {
+      margin-bottom: 40px;
+      padding-bottom: 28px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .konten-header .section-badge {
+      margin-bottom: 12px;
+    }
+
+    .konten-header h1 {
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .konten-header p {
+      color: var(--text-secondary);
+      font-size: 0.97rem;
+      max-width: 620px;
+    }
+
+    /* ---- AREA KONTEN PER MATERI ---- */
+    /* Setiap section materi (bab + subbab) */
+    .materi-section {
+      display: none; /* Tersembunyi secara default */
+      animation: fadeSlide 0.4s ease;
+    }
+
+    /* Tampilkan section yang aktif */
+    .materi-section.aktif {
+      display: block;
+    }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Judul materi */
+    .materi-judul {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .materi-subjudul {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+    }
+
+    /* Kotak ringkasan/penjelasan teks */
+    .materi-teks {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      margin-bottom: 28px;
+      color: var(--text-secondary);
+      font-size: 0.97rem;
+      line-height: 1.8;
+    }
+
+    .materi-teks h3 {
+      color: var(--text-main);
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 20px 0 8px;
+    }
+
+    .materi-teks h3:first-child { margin-top: 0; }
+
+    .materi-teks p { margin-bottom: 12px; }
+    .materi-teks p:last-child { margin-bottom: 0; }
+
+    .materi-teks ul {
+      list-style: disc;
+      padding-left: 20px;
+      margin-bottom: 12px;
+    }
+
+    .materi-teks ul li { margin-bottom: 4px; }
+
+    /* Label bagian dalam materi */
+    .materi-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--primary);
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    /* Wrapper untuk slide/presentasi (Canva embed) */
+    .slide-wrapper {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+
+    .slide-label {
+      padding: 12px 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: var(--bg-section-alt);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Wrapper untuk video YouTube */
+    .video-wrapper {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+
+    .video-label {
+      padding: 12px 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: var(--bg-section-alt);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Iframe responsif (16:9) */
+    .iframe-responsive {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* Rasio 16:9 */
+    }
+
+    .iframe-responsive iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    /* Placeholder materi yang belum ada */
+    .placeholder-konten {
+      background: var(--bg-section-alt);
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-lg);
+      padding: 48px 32px;
+      text-align: center;
+      color: var(--text-light);
+      margin-bottom: 28px;
+    }
+
+    .placeholder-konten .ph-icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .placeholder-konten p { font-size: 0.9rem; }
+
+    /* Navigasi bawah: tombol sebelumnya dan berikutnya */
+    .materi-nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 40px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+    }
+
+    .materi-nav .btn { font-size: 0.88rem; padding: 10px 20px; }
+
+    /* Tombol kembali ke landing page */
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      transition: color 0.2s, background 0.2s;
+      margin-bottom: 24px;
+    }
+
+    .back-btn:hover {
+      color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    /* =====================================================
+       RESPONSIVE – Mobile untuk belajar.html
+       ===================================================== */
+    @media (max-width: 768px) {
+      .belajar-layout { flex-direction: column; }
+
+      /* Sidebar menjadi panel yang bisa disembunyikan */
+      .sidebar {
+        position: fixed;
+        top: var(--nav-height);
+        left: 0;
+        bottom: 0;
+        z-index: 400;
+        transform: translateX(-100%);
+        transition: transform 0.35s ease;
+        height: calc(100vh - var(--nav-height));
+        box-shadow: var(--shadow-lg);
+      }
+
+      /* Saat sidebar terbuka di mobile */
+      .sidebar.sidebar-open {
+        transform: translateX(0);
+      }
+
+      /* Tombol toggle sidebar muncul di mobile */
+      .sidebar-toggle { display: flex; align-items: center; justify-content: center; }
+
+      /* Konten mengambil lebar penuh */
+      .konten-area {
+        padding: 28px 20px;
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .konten-area { padding: 20px 16px; }
+      .materi-teks { padding: 20px; }
+    }
+  </style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="container nav-container">
-            <a href="index.html" class="logo">← Kembali ke Landing Page</a>
-        </div>
-    </nav>
-
-    <div class="container">
-        <header style="padding: 40px 0; text-align: center;">
-            <h1>Pusat Belajar Ekosistem</h1>
-            <p>Pelajari materi ekosistem langkah demi langkah secara mendalam.</p>
-        </header>
-
-        <div class="lms-container">
-            <aside class="sidebar">
-                <span class="bab-title">Bab 1: Mengenal Ekosistem</span>
-                <ul>
-                    <li><a href="#">1.1 Apa itu Ekosistem?</a></li>
-                    <li><a href="#">1.2 Komponen Biotik & Abiotik</a></li>
-                </ul>
-
-                <span class="bab-title">Bab 2: Rantai Makanan</span>
-                <ul>
-                    <li><a href="#">2.1 Produsen & Konsumen</a></li>
-                    <li><a href="#">2.2 Jaring-jaring Makanan</a></li>
-                </ul>
-
-                <span class="bab-title">Bab 3: Keseimbangan Lingkungan</span>
-                <ul>
-                    <li><a href="#">3.1 Dampak Pencemaran</a></li>
-                    <li><a href="#">3.2 Upaya Pelestarian</a></li>
-                </ul>
-            </aside>
-
-            <main class="content-area">
-                <h2>1.1 Apa itu Ekosistem?</h2>
-                <p style="margin-top: 20px;">
-                    Ekosistem adalah hubungan timbal balik antara makhluk hidup dengan lingkungannya. 
-                    Di sini kamu akan belajar bagaimana satu makhluk hidup bergantung pada yang lain.
-                </p>
-                
-                <div class="media-placeholder">
-                    <img src="https://i.ibb.co.com/v4pJFg4L/NAVIGASI-MATERI.png" alt="NAVIGASI MATERI" style="max-width: 100%; max-height: 100%;">
-                </div>
-
-                <h3>Penjelasan Singkat</h3>
-                <p>Ekosistem terdiri dari dua komponen utama, yaitu komponen hidup (biotik) dan komponen tak hidup (abiotik)...</p>
-                
-                <div class="media-placeholder">
-                    <p>[ Area Embed Game / Video / Iframe ]</p>
-                </div>
-            </main>
-        </div>
+  <!-- ===================== NAVBAR (sama seperti landing page) ===================== -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-icon">🌿</span>
+        <span>Clash of <strong>Ecosystem</strong></span>
+      </a>
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="index.html"        class="nav-link">← Kembali ke Beranda</a></li>
+        <li><a href="index.html#fitur"  class="nav-link">Fitur</a></li>
+        <li><a href="index.html#tim"    class="nav-link">Tim</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Buka menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
+  </nav>
+
+  <!-- ===================== LAYOUT UTAMA ===================== -->
+  <div class="belajar-layout">
+
+    <!-- ---- SIDEBAR KIRI: Daftar Bab ---- -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-title">📘 Daftar Materi</div>
+      <ul class="bab-list" id="bab-list">
+
+        <!-- Bab 1 -->
+        <li class="bab-item" data-bab="1">
+          <div class="bab-header">
+            <span>Bab 1 · Ekosistem</span>
+            <span class="bab-arrow">▶</span>
+          </div>
+          <ul class="subbab-list">
+            <li><span class="subbab-link" data-target="1-1">1.1 Pengertian & Tingkatan</span></li>
+            <li><span class="subbab-link" data-target="1-2">1.2 Komponen Ekosistem</span></li>
+            <li><span class="subbab-link" data-target="1-3">1.3 Hubungan & Interaksi</span></li>
+            <li><span class="subbab-link" data-target="1-4">1.4 Pentingnya Keseimbangan</span></li>
+          </ul>
+        </li>
+
+        <!-- Bab 2 -->
+        <li class="bab-item" data-bab="2">
+          <div class="bab-header">
+            <span>Bab 2 · Interaksi Makhluk Hidup</span>
+            <span class="bab-arrow">▶</span>
+          </div>
+          <ul class="subbab-list">
+            <li><span class="subbab-link" data-target="2-1">2.1 Pentingnya Interaksi</span></li>
+            <li><span class="subbab-link" data-target="2-2">2.2 Simbiosis</span></li>
+            <li><span class="subbab-link" data-target="2-3">2.3 Predasi</span></li>
+            <li><span class="subbab-link" data-target="2-4">2.4 Kompetisi</span></li>
+            <li><span class="subbab-link" data-target="2-5">2.5 Netralisme</span></li>
+          </ul>
+        </li>
+
+        <!-- Bab 3 -->
+        <li class="bab-item" data-bab="3">
+          <div class="bab-header">
+            <span>Bab 3 · Aliran Energi</span>
+            <span class="bab-arrow">▶</span>
+          </div>
+          <ul class="subbab-list">
+            <li><span class="subbab-link" data-target="3-1">3.1 Rantai Makanan</span></li>
+            <li><span class="subbab-link" data-target="3-2">3.2 Jaring-Jaring Makanan</span></li>
+            <li><span class="subbab-link" data-target="3-3">3.3 Aliran Energi 10%</span></li>
+            <li><span class="subbab-link" data-target="3-4">3.4 Piramida Makanan</span></li>
+          </ul>
+        </li>
+
+        <!-- Bab 4 -->
+        <li class="bab-item" data-bab="4">
+          <div class="bab-header">
+            <span>Bab 4 · Keseimbangan Ekosistem</span>
+            <span class="bab-arrow">▶</span>
+          </div>
+          <ul class="subbab-list">
+            <li><span class="subbab-link" data-target="4-1">4.1 Ekosistem Seimbang</span></li>
+            <li><span class="subbab-link" data-target="4-2">4.2 Faktor Gangguan</span></li>
+            <li><span class="subbab-link" data-target="4-3">4.3 Dampak Gangguan</span></li>
+            <li><span class="subbab-link" data-target="4-4">4.4 Upaya Menjaga</span></li>
+          </ul>
+        </li>
+
+        <!-- Bab 5 -->
+        <li class="bab-item" data-bab="5">
+          <div class="bab-header">
+            <span>Bab 5 · Kerusakan Lingkungan</span>
+            <span class="bab-arrow">▶</span>
+          </div>
+          <ul class="subbab-list">
+            <li><span class="subbab-link" data-target="5-1">5.1 Apa itu Kerusakan?</span></li>
+            <li><span class="subbab-link" data-target="5-2">5.2 Jenis Pencemaran</span></li>
+            <li><span class="subbab-link" data-target="5-3">5.3 Dampak Berantai</span></li>
+            <li><span class="subbab-link" data-target="5-4">5.4 Cara Mengatasi</span></li>
+          </ul>
+        </li>
+
+        <!-- Bab 6 -->
+        <li class="bab-item" data-bab="6">
+          <div class="bab-header">
+            <span>Bab 6 · Pelestarian Lingkungan</span>
+            <span class="bab-arrow">▶</span>
+          </div>
+          <ul class="subbab-list">
+            <li><span class="subbab-link" data-target="6-1">6.1 Mengapa Perlu Dilestarikan</span></li>
+            <li><span class="subbab-link" data-target="6-2">6.2 Langkah Nyata</span></li>
+            <li><span class="subbab-link" data-target="6-3">6.3 Prinsip 3R</span></li>
+            <li><span class="subbab-link" data-target="6-4">6.4 Sikap Peduli Lingkungan</span></li>
+          </ul>
+        </li>
+
+        <!-- Bab 7 -->
+        <li class="bab-item" data-bab="7">
+          <div class="bab-header">
+            <span>Bab 7 · Manusia & Alam</span>
+            <span class="bab-arrow">▶</span>
+          </div>
+          <ul class="subbab-list">
+            <li><span class="subbab-link" data-target="7-1">7.1 Peran Strategis Manusia</span></li>
+            <li><span class="subbab-link" data-target="7-2">7.2 Eco-Friendly Lifestyle</span></li>
+            <li><span class="subbab-link" data-target="7-3">7.3 Manfaat Jangka Panjang</span></li>
+          </ul>
+        </li>
+
+      </ul>
+    </aside>
+
+    <!-- ---- AREA KONTEN KANAN ---- -->
+    <main class="konten-area" id="konten-area">
+
+      <!-- Tombol kembali ke landing page -->
+      <a href="index.html" class="back-btn">← Kembali ke Beranda</a>
+
+      <!-- Header halaman belajar -->
+      <div class="konten-header">
+        <span class="section-badge">📚 Materi Pembelajaran</span>
+        <h1>Materi Pembelajaran Ekosistem</h1>
+        <p>
+          Halaman pembelajaran ini berisi materi interaktif tentang ekosistem untuk siswa SMP/MTs kelas VII.
+          Pilih bab dan subbab dari menu di sebelah kiri untuk mulai belajar. Setiap bab dilengkapi
+          dengan penjelasan materi, slide presentasi, dan video pembelajaran.
+        </p>
+      </div>
+
+      <!-- ========== KONTEN SELAMAT DATANG (tampil di awal) ========== -->
+      <div class="materi-section aktif" id="konten-welcome">
+        <div style="text-align:center; padding: 48px 0;">
+          <div style="font-size:4rem; margin-bottom:20px;">🌿</div>
+          <h2 style="font-size:1.6rem; font-weight:800; color:var(--text-main); margin-bottom:12px;">
+            Selamat Datang di Materi Ekosistem!
+          </h2>
+          <p style="color:var(--text-secondary); max-width:480px; margin:0 auto 32px;">
+            Pilih salah satu bab dari daftar materi di sebelah kiri untuk mulai belajar.
+            Tersedia 7 bab materi lengkap dengan slide dan video pembelajaran.
+          </p>
+          <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
+            <div style="background:var(--primary-light); border-radius:var(--radius-md); padding:16px 24px; text-align:center;">
+              <div style="font-size:1.5rem;">📖</div>
+              <div style="font-size:0.85rem; font-weight:600; color:var(--primary); margin-top:6px;">7 Bab Materi</div>
+            </div>
+            <div style="background:var(--secondary-light); border-radius:var(--radius-md); padding:16px 24px; text-align:center;">
+              <div style="font-size:1.5rem;">🎬</div>
+              <div style="font-size:0.85rem; font-weight:600; color:var(--secondary-dark); margin-top:6px;">Video per Bab</div>
+            </div>
+            <div style="background:var(--accent-light); border-radius:var(--radius-md); padding:16px 24px; text-align:center;">
+              <div style="font-size:1.5rem;">📊</div>
+              <div style="font-size:0.85rem; font-weight:600; color:var(--accent-dark); margin-top:6px;">Slide Interaktif</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ========== BAB 1 ========== -->
+      <div class="materi-section" id="konten-1-1">
+        <h2 class="materi-judul">Bab 1 · Ekosistem</h2>
+        <p class="materi-subjudul">Subbab 1.1 · Pengertian Ekosistem dan Tingkat Organisasinya</p>
+
+        <!-- Slide Canva -->
+        <div class="slide-wrapper">
+          <div class="slide-label">📊 Slide Presentasi – Bab 1</div>
+          <div style="position:relative;width:100%;height:0;padding-top:56.25%;overflow:hidden;border-radius:0 0 var(--radius-lg) var(--radius-lg);">
+            <iframe loading="lazy" style="position:absolute;width:100%;height:100%;top:0;left:0;border:none;"
+              src="https://www.canva.com/design/DAHJCcLCze0/gUuVsYZ9laNDH8HiLvDLYg/view?embed"
+              allowfullscreen allow="fullscreen"></iframe>
+          </div>
+        </div>
+
+        <!-- Ringkasan teks -->
+        <div class="materi-teks">
+          <h3>Tingkat Organisasi Kehidupan</h3>
+          <p>Ekosistem tersusun dari unit-unit kehidupan yang berjenjang sebelum membentuk ekosistem:</p>
+          <ul>
+            <li><strong>Individu:</strong> Satu makhluk hidup tunggal (Contoh: seekor semut, sebatang pohon kelapa).</li>
+            <li><strong>Populasi:</strong> Kumpulan individu sejenis di tempat yang sama (Contoh: sekelompok semut di atas meja).</li>
+            <li><strong>Komunitas:</strong> Kumpulan berbagai populasi di wilayah yang sama (Contoh: di sawah ada padi, katak, dan ular).</li>
+            <li><strong>Ekosistem:</strong> Hubungan timbal balik antara komunitas (biotik) dengan lingkungan fisiknya (abiotik).</li>
+          </ul>
+        </div>
+
+        <!-- Video -->
+        <div class="video-wrapper">
+          <div class="video-label">🎬 Video Pembelajaran – Bab 1</div>
+          <div class="iframe-responsive">
+            <iframe src="https://www.youtube.com/embed/fpk4df01xLg?si=Xv7rQ9QBViByCiy1"
+              title="Video Bab 1" allowfullscreen
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          </div>
+        </div>
+
+        <div class="materi-nav">
+          <span></span>
+          <button class="btn btn-primary" onclick="tampilKonten('1-2')">Subbab 1.2 →</button>
+        </div>
+      </div>
+
+      <div class="materi-section" id="konten-1-2">
+        <h2 class="materi-judul">Bab 1 · Ekosistem</h2>
+        <p class="materi-subjudul">Subbab 1.2 · Komponen Ekosistem</p>
+        <div class="materi-teks">
+          <h3>Komponen Biotik (Berdasarkan Peranannya)</h3>
+          <ul>
+            <li><strong>Produsen (Autotrof):</strong> Mengubah energi matahari menjadi makanan. Tanpa produsen, kehidupan akan berhenti.</li>
+            <li><strong>Konsumen (Heterotrof):</strong> Memakan makhluk lain. Dibagi menjadi Herbivora (pemakan tumbuhan), Karnivora (pemakan daging), dan Omnivora (pemakan segala).</li>
+            <li><strong>Pengurai (Dekomposer):</strong> Membusukkan bangkai agar nutrisinya kembali ke tanah.</li>
+          </ul>
+          <h3>Komponen Abiotik (Faktor Penentu Kehidupan)</h3>
+          <ul>
+            <li><strong>Cahaya Matahari:</strong> Sumber energi utama Bumi.</li>
+            <li><strong>Air:</strong> Komponen utama penyusun tubuh makhluk hidup.</li>
+            <li><strong>Udara:</strong> Untuk bernapas dan fotosintesis.</li>
+            <li><strong>Topografi:</strong> Tinggi rendahnya permukaan bumi yang memengaruhi suhu.</li>
+          </ul>
+        </div>
+        <div class="materi-nav">
+          <button class="btn btn-outline" onclick="tampilKonten('1-1')">← 1.1</button>
+          <button class="btn btn-primary" onclick="tampilKonten('1-3')">1.3 →</button>
+        </div>
+      </div>
+
+      <div class="materi-section" id="konten-1-3">
+        <h2 class="materi-judul">Bab 1 · Ekosistem</h2>
+        <p class="materi-subjudul">Subbab 1.3 · Hubungan dan Interaksi dalam Ekosistem</p>
+        <div class="materi-teks">
+          <h3>Rantai Makanan &amp; Jaring-Jaring Makanan</h3>
+          <p>Perjalanan "makan dan dimakan": <strong>Padi → Tikus → Ular → Elang → Pengurai.</strong> Dalam dunia nyata, rantai-rantai ini bergabung membentuk Jaring-Jaring Makanan.</p>
+          <h3>Simbiosis (Hidup Bersama)</h3>
+          <ul>
+            <li><strong>Mutualisme:</strong> Keduanya untung. Contoh: Lebah dan bunga.</li>
+            <li><strong>Parasitisme:</strong> Satu untung, satu rugi. Contoh: Nyamuk pada manusia.</li>
+            <li><strong>Komensalisme:</strong> Satu untung, satu tidak terpengaruh. Contoh: Ikan remora pada hiu.</li>
+          </ul>
+        </div>
+        <div class="materi-nav">
+          <button class="btn btn-outline" onclick="tampilKonten('1-2')">← 1.2</button>
+          <button class="btn btn-primary" onclick="tampilKonten('1-4')">1.4 →</button>
+        </div>
+      </div>
+
+      <div class="materi-section" id="konten-1-4">
+        <h2 class="materi-judul">Bab 1 · Ekosistem</h2>
+        <p class="materi-subjudul">Subbab 1.4 · Mengapa Keseimbangan Ekosistem Penting?</p>
+        <div class="materi-teks">
+          <p>Ekosistem dikatakan seimbang jika jumlah produsen lebih banyak daripada konsumen. Jika manusia merusak salah satu komponen—misalnya memburu ular sawah sampai habis—maka populasi tikus akan meledak dan merusak padi petani.</p>
+        </div>
+        <div class="materi-nav">
+          <button class="btn btn-outline" onclick="tampilKonten('1-3')">← 1.3</button>
+          <button class="btn btn-primary" onclick="tampilKonten('2-1')">Bab 2 →</button>
+        </div>
+      </div>
+
+
+      <!-- ========== BAB 2 ========== -->
+      <div class="materi-section" id="konten-2-1">
+        <h2 class="materi-judul">Bab 2 · Interaksi Makhluk Hidup dalam Ekosistem</h2>
+        <p class="materi-subjudul">Subbab 2.1 · Pentingnya Interaksi bagi Kehidupan</p>
+
+        <div class="slide-wrapper">
+          <div class="slide-label">📊 Slide Presentasi – Bab 2</div>
+          <div style="position:relative;width:100%;height:0;padding-top:56.25%;overflow:hidden;border-radius:0 0 var(--radius-lg) var(--radius-lg);">
+            <iframe loading="lazy" style="position:absolute;width:100%;height:100%;top:0;left:0;border:none;"
+              src="https://www.canva.com/design/DAHJJwQ3RY8/_edAWWkfKRLRuY5Xt56Ftg/view?embed"
+              allowfullscreen allow="fullscreen"></iframe>
+          </div>
+        </div>
+
+        <div class="materi-teks">
+          <p>Makhluk hidup berinteraksi untuk bertahan hidup. Interaksi terjadi karena tiga hal utama:</p>
+          <ul>
+            <li><strong>Kebutuhan Nutrisi:</strong> Mendapatkan makanan/energi.</li>
+            <li><strong>Keamanan:</strong> Mendapatkan perlindungan dari musuh.</li>
+            <li><strong>Reproduksi:</strong> Mencari pasangan untuk meneruskan keturunan.</li>
+          </ul>
+        </div>
+
+        <div class="video-wrapper">
+          <div class="video-label">🎬 Video Pembelajaran – Bab 2</div>
+          <div class="iframe-responsive">
+            <iframe src="https://www.youtube.com/embed/UJqzOJ4alMU?si=Riq8MG3NE7LRHvo2"
+              title="Video Bab 2" allowfullscreen
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          </div>
+        </div>
+
+        <div class="materi-nav">
+          <button class="btn btn-outline" onclick="tampilKonten('1-4')">← Bab 1</button>
+          <button class="btn btn-primary" onclick="tampilKonten('2-2')">2.2 →</button>
+        </div>
+      </div>
+
+      <!-- Subbab 2.2 - 2.5 (ringkas) -->
+      <div class="materi-section" id="konten-2-2">
+        <h2 class="materi-judul">Bab 2 · Interaksi Makhluk Hidup</h2>
+        <p class="materi-subjudul">Subbab 2.2 · Simbiosis: Hidup Berdampingan</p>
+        <div class="materi-teks">
+          <h3>Simbiosis Mutualisme (+/+)</h3>
+          <p>Keduanya mendapat "hadiah". Contoh: Lichenes (Lumut Kerak) – kerja sama antara jamur dan ganggang. Fakta: Tanpa lebah, banyak buah-buahan tidak akan tumbuh karena tidak ada yang membantu penyerbukan.</p>
+          <h3>Simbiosis Komensalisme (+/0)</h3>
+          <p>Satu pihak terbantu, pihak lain tidak terpengaruh. Contoh: Ikan Remora menempel pada ikan Hiu untuk mendapat sisa makanan dan perlindungan.</p>
+          <h3>Simbiosis Parasitisme (+/-)</h3>
+          <p>Ada parasit dan korban (inang). Contoh: Kutu pada rambut manusia. Penting: Parasit tidak langsung membunuh inangnya agar tetap punya sumber makanan.</p>
+        </div>
+        <div class="materi-nav">
+          <button class="btn btn-outline" onclick="tampilKonten('2-1')">← 2.1</button>
+          <button class="btn btn-primary" onclick="tampilKonten('2-3')">2.3 →</button>
+        </div>
+      </div>
+
+      <div class="materi-section" id="konten-2-3">
+        <h2 class="materi-judul">Bab 2 · Interaksi Makhluk Hidup</h2>
+        <p class="materi-subjudul">Subbab 2.3 · Predasi: Hukum Rimba</p>
+        <div class="materi-teks">
+          <p>Predasi adalah interaksi "Makan dan Dimakan" – cara utama perpindahan energi di alam.</p>
+          <ul>
+            <li><strong>Predator:</strong> Hewan yang berburu dengan indra tajam dan senjata alami.</li>
+            <li><strong>Mangsa:</strong> Hewan yang dimakan, biasanya memiliki kemampuan kamuflase atau lari cepat.</li>
+          </ul>
+          <p><strong>Peran penting:</strong> Predasi mengontrol populasi. Tanpa harimau, rusa akan berlebihan dan menghabiskan semua rumput di hutan.</p>
+        </div>
+        <div class="materi-nav">
+          <button class="btn btn-outline" onclick="tampilKonten('2-2')">← 2.2</button>
+          <button class="btn btn-primary" onclick="tampilKonten('2-4')">2.4 →</button>
+        </div>
+      </div>
+
+      <div class="materi-section" id="konten-2-4">
+        <h2 class="materi-judul">Bab 2 · Interaksi Makhluk Hidup</h2>
+        <p class="materi-subjudul">Subbab 2.4 · Kompetisi: Persaingan Sengit</p>
+        <div class="materi-teks">
+          <ul>
+            <li><strong>Kompetisi Intraspesifik:</strong> Persaingan sesama jenis. Contoh: Dua singa jantan berkelahi memperebutkan wilayah.</li>
+            <li><strong>Kompetisi Interspesifik:</strong> Persaingan antar spesies. Contoh: Tanaman jagung dan rumput liar bersaing memperebutkan unsur hara.</li>
+          </ul>
+        </div>
+        <div class="materi-nav">
+          <button class="btn btn-outline" onclick="tampilKonten('2-3')">← 2.3</button>
+          <button class="btn btn-primary" onclick="tampilKonten('2-5')">2.5 →</button>
+        </div>
+      </div>
+
+      <div class="materi-section" id="konten-2-5">
+        <h2 class="materi-judul">Bab 2 · Interaksi Makhluk Hidup</h2>
+        <p class="materi-subjudul">Subbab 2.5 · Netralisme</p>
+        <div class="materi-teks">
+          <p>Hubungan antar makhluk hidup di tempat yang sama tetapi <strong>tidak saling memengaruhi</strong>. Contoh: Ayam dan kambing di padang rumput. Ayam makan cacing/biji-bijian, kambing makan rumput – tidak bersaing dan tidak saling memangsa.</p>
+        </div>
+        <div class="materi-nav">
+          <button class="btn btn-outline" onclick="tampilKonten('2-4')">← 2.4</button>
+          <button class="btn btn-primary" onclick="tampilKonten('3-1')">Bab 3 →</button>
+        </div>
+      </div>
+
+
+      <!-- ========== BAB 3 ========== -->
+      <div class="materi-section" id="konten-3-1">
+        <h2 class="materi-judul">Bab 3 · Aliran Energi dalam Ekosistem</h2>
+        <p class="materi-subjudul">Subbab 3.1 · Rantai Makanan: Jalur Tunggal Perpindahan Energi</p>
+
+        <div class="slide-wrapper">
+          <div class="slide-label">📊 Slide Presentasi – Bab 3</div>
+          <div style="position:relative;width:100%;height:0;padding-top:56.25%;overflow:hidden;border-radius:0 0 var(--radius-lg) var(--radius-lg);">
+            <iframe loading="lazy" style="position:absolute;width:100%;height:100%;top:0;left:0;border:none;"
+              src="https://www.canva.com/design/DAHJddorMMk/_Lpeul8EATgSneJUFia6VA/view?embed"
+              allowfullscreen allow="fullscreen"></iframe>
+          </div>
+        </div>
+
+        <div class="materi-teks">
+          <h3>Tingkat Trofik</h3>
+          <ul>
+            <li><strong>Trofik 1 (Produsen):</strong> Selalu tumbuhan atau alga.</li>
+            <li><strong>Trofik 2 (Konsumen I):</strong> Hewan herbivora.</li>
+            <li><strong>Trofik 3 (Konsumen II):</strong> Karnivora kecil/menengah.</li>
+            <li><strong>Trofik 4 (Konsumen III/Puncak):</strong> Karnivora besar.</li>
+          </ul>
+        </div>
+
+        <div class="video-wrapper">
+          <div class="video-label">🎬 Video Pembelajaran – Bab 3</div>
+          <div class="iframe-responsive">
+            <iframe src="https://www.youtube.com/embed/E7j70i7LwGs?si=XWB2mUlWrxul0n5H"
+              title="Video Bab 3" allowfullscreen
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          </div>
+        </div>
+
+        <div class="materi-nav">
+          <button class="btn btn-outline" onclick="tampilKonten('2-5')">← Bab 2</button>
+          <button class="btn btn-primary" onclick="tampilKonten('3-2')">3.2 →</button>
+        </div>
+      </div>
+
+      <div class="materi-section" id="konten-3-2">
+        <h2 class="materi-judul">Bab 3 · Aliran Energi</h2>
+        <p class="materi-subjudul">Subbab 3.2 · Jaring-Jaring Makanan</p>
+        <div class="materi-teks">
+          <p>Jaring-jaring makanan adalah gabungan dari banyak rantai makanan yang saling tumpang tindih. Semakin banyak cabang, semakin stabil ekosistem tersebut – karena jika satu jenis makanan habis, hewan masih punya pilihan lain.</p>
+        </div>
+        <div class="materi-nav">
+          <button class="btn btn-outline" onclick="tampilKonten('3-1')">← 3.1</button>
+          <button class="btn btn-primary" onclick="tampilKonten('3-3')">3.3 →</button>
+        </div>
+      </div>
+
+      <div class="materi-section" id="konten-3-3">
+        <h2 class="materi-judul">Bab 3 · Aliran Energi</h2>
+        <p class="materi-subjudul">Subbab 3.3 · Aliran Energi: Hukum 10 Persen</p>
+        <div class="materi-teks">
+          <p>Energi tidak hilang, tapi berkurang efektivitasnya. Hanya sekitar <strong>10%</strong> energi yang tersimpan di tubuh dan bisa dimakan oleh tingkat trofik berikutnya – sisanya (90%) digunakan untuk bergerak, bernapas, tumbuh, dan panas.</p>
+          <p><em>Itulah sebabnya hewan di puncak rantai makanan jumlahnya jauh lebih sedikit daripada rumput.</em></p>
+        </div>
+        <div class="materi-nav">
+          <button class="btn btn-outline" onclick="tampilKonten('3-2')">← 3.2</button>
+          <button class="btn btn-primary" onclick="tampilKonten('3-4')">3.4 →</button>
+        </div>
+      </div>
+
+      <div class="materi-section" id="konten-3-4">
+        <h2 class="materi-judul">Bab 3 · Aliran Energi</h2>
+        <p class="materi-subjudul">Subbab 3.4 · Piramida Makanan</p>
+        <div class="materi-teks">
+          <p>Piramida makanan menggambarkan komposisi berat/jumlah organisme di tiap tingkat trofik. Dasar piramida (lebar) diisi Produsen, puncak (sempit) oleh Predator Puncak. Jika produsen terganggu, seluruh tingkatan di atasnya akan terancam.</p>
+        </div>
+        <div class="materi-nav">
+          <button class="btn btn-outline" onclick="tampilKonten('3-3')">← 3.3</button>
+          <button class="btn btn-primary" onclick="tampilKonten('4-1')">Bab 4 →</button>
+        </div>
+      </div>
+
+
+      <!-- ========== BAB 4 ========== -->
+      <div class="materi-section" id="konten-4-1">
+        <h2 class="materi-judul">Bab 4 · Keseimbangan dan Gangguan Ekosistem</h2>
+        <p class="materi-subjudul">Subbab 4.1 · Apa itu Ekosistem yang Seimbang?</p>
+
+        <div class="slide-wrapper">
+          <div class="slide-label">📊 Slide Presentasi – Bab 4</div>
+          <div style="position:relative;width:100%;height:0;padding-top:56.25%;overflow:hidden;border-radius:0 0 var(--radius-lg) var(--radius-lg);">
+            <iframe loading="lazy" style="position:absolute;width:100%;height:100%;top:0;left:0;border:none;"
+              src="https://www.canva.com/design/DAHJFVraUz0/XTzgWDc3Noq9EMFy1ic1jg/view?embed"
+              allowfullscreen allow="fullscreen"></iframe>
+          </div>
+        </div>
+
+        <div class="materi-teks">
+          <p>Ekosistem yang seimbang disebut dalam kondisi <strong>Homeostatis</strong>. Ciri-cirinya:</p>
+          <ul>
+            <li>Struktur piramida stabil: Produsen lebih banyak dari konsumen.</li>
+            <li>Siklus materi berjalan: Air, oksigen, dan nutrisi tanah terus berputar.</li>
+            <li>Daya lenting: Mampu pulih setelah gangguan kecil.</li>
+          </ul>
+        </div>
+
+        <div class="video-wrapper">
+          <div class="video-label">🎬 Video Pembelajaran – Bab 4</div>
+          <div class="iframe-responsive">
+            <iframe src="https://www.youtube.com/embed/Zbhn8KTZ1vI?si=4KlUqund4hQivnwy"
+              title="Video Bab 4" allowfullscreen
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          </div>
+        </div>
+
+        <div class="materi-nav">
+          <button class="btn btn-outline" onclick="tampilKonten('3-4')">← Bab 3</button>
+          <button class="btn btn-primary" onclick="tampilKonten('4-2')">4.2 →</button>
+        </div>
+      </div>
+
+      <div class="materi-section" id="konten-4-2">
+        <h2 class="materi-judul">Bab 4 · Keseimbangan Ekosistem</h2>
+        <p class="materi-subjudul">Subbab 4.2 · Faktor Penyebab Gangguan</p>
+        <div class="materi-teks">
+          <h3>Faktor Alam</h3>
+          <p>Gunung meletus, tsunami, banjir, kekeringan panjang yang menyebabkan produsen mati.</p>
+          <h3>Faktor Manusia</h3>
+          <p>Fragmentasi habitat, pencemaran berlebih (pestisida yang membunuh lebah), dan introduksi spesies asing.</p>
+        </div>
+        <div class="materi-nav">
+          <button class="btn btn-outline" onclick="tampilKonten('4-1')">← 4.1</button>
+          <button class="btn btn-primary" onclick="tampilKonten('4-3')">4.3 →</button>
+        </div>
+      </div>
+
+      <div class="materi-section" id="konten-4-3">
+        <h2 class="materi-judul">Bab 4 · Keseimbangan Ekosistem</h2>
+        <p class="materi-subjudul">Subbab 4.3 · Dampak Gangguan: Efek Domino</p>
+        <div class="materi-teks">
+          <ul>
+            <li><strong>Putusnya Rantai Makanan:</strong> Ular sawah diburu habis → tikus meledak → padi gagal panen.</li>
+            <li><strong>Hilangnya Sumber Daya:</strong> Hutan gundul → mata air kering dan banjir.</li>
+            <li><strong>Pemanasan Global:</strong> Berkurangnya pohon → CO₂ meningkat → suhu bumi naik.</li>
+          </ul>
+        </div>
+        <div class="materi-nav">
+          <button class="btn btn-outline" onclick="tampilKonten('4-2')">← 4.2</button>
+          <button class="btn btn-primary" onclick="tampilKonten('4-4')">4.4 →</button>
+        </div>
+      </div>
+
+      <div class="materi-section" id="konten-4-4">
+        <h2 class="materi-judul">Bab 4 · Keseimbangan Ekosistem</h2>
+        <p class="materi-subjudul">Subbab 4.4 · Upaya Menjaga Keseimbangan</p>
+        <div class="materi-teks">
+          <ul>
+            <li><strong>Reboisasi:</strong> Menanam kembali hutan yang gundul.</li>
+            <li><strong>Konservasi:</strong> Melindungi hewan langka melalui suaka margasatwa.</li>
+            <li><strong>Pengolahan Limbah:</strong> Sampah dan limbah kimia tidak masuk ke sungai atau laut.</li>
+          </ul>
+        </div>
+        <div class="materi-nav">
+          <button class="btn btn-outline" onclick="tampilKonten('4-3')">← 4.3</button>
+          <button class="btn btn-primary" onclick="tampilKonten('5-1')">Bab 5 →</button>
+        </div>
+      </div>
+
+
+      <!-- ========== BAB 5 ========== -->
+      <div class="materi-section" id="konten-5-1">
+        <h2 class="materi-judul">Bab 5 · Kerusakan Lingkungan dan Pencemaran</h2>
+        <p class="materi-subjudul">Subbab 5.1 · Apa itu Kerusakan Lingkungan?</p>
+
+        <div class="slide-wrapper">
+          <div class="slide-label">📊 Slide Presentasi – Bab 5</div>
+          <div style="position:relative;width:100%;height:0;padding-top:56.25%;overflow:hidden;border-radius:0 0 var(--radius-lg) var(--radius-lg);">
+            <iframe loading="lazy" style="position:absolute;width:100%;height:100%;top:0;left:0;border:none;"
+              src="https://www.canva.com/design/DAHJePSGn7A/U_JFzpNzLAQ-4VG8maqdgA/view?embed"
+              allowfullscreen allow="fullscreen"></iframe>
+          </div>
+        </div>
+
+        <div class="materi-teks">
+          <p>Kerusakan lingkungan terjadi ketika <strong>Daya Dukung Lingkungan</strong> menurun – yaitu kemampuan lingkungan untuk mendukung kehidupan makhluk hidup, menyediakan air bersih, udara segar, dan tanah yang subur.</p>
+        </div>
+
+        <div class="video-wrapper">
+          <div class="video-label">🎬 Video Pembelajaran – Bab 5</div>
+          <div class="iframe-responsive">
+            <iframe src="https://www.youtube.com/embed/QvugUB52yO4?si=51SxWIZCqhFN8dtY"
+              title="Video Bab 5" allowfullscreen
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          </div>
+        </div>
+
+        <div class="materi-nav">
+          <button class="btn btn-outline" onclick="tampilKonten('4-4')">← Bab 4</button>
+          <button class="btn btn-primary" onclick="tampilKonten('5-2')">5.2 →</button>
+        </div>
+      </div>
+
+      <div class="materi-section" id="konten-5-2">
+        <h2 class="materi-judul">Bab 5 · Kerusakan Lingkungan</h2>
+        <p class="materi-subjudul">Subbab 5.2 · Mengenal Jenis-Jenis Pencemaran</p>
+        <div class="materi-teks">
+          <h3>Pencemaran Air</h3>
+          <p>Air tercemar jika berubah warna, bau, atau rasa. Eutrofikasi (ledakan eceng gondok) akibat limbah detergen. Bioakumulasi: racun dari limbah menumpuk di tubuh ikan lalu dimakan manusia.</p>
+          <h3>Pencemaran Udara</h3>
+          <p>Gas CO dari kendaraan dan CFC dari AC. Hujan asam merusak bangunan dan tumbuhan. Efek Rumah Kaca menyebabkan Pemanasan Global.</p>
+          <h3>Pencemaran Tanah</h3>
+          <p>Sampah anorganik (plastik, kaleng) yang tidak bisa hancur selama ratusan tahun. Bahan kimia dari baterai bekas membunuh cacing dan mikroorganisme pengurai.</p>
+        </div>
+        <div class="materi-nav">
+          <button class="btn btn-outline" onclick="tampilKonten('5-1')">← 5.1</button>
+          <button class="btn btn-primary" onclick="tampilKonten('5-3')">5.3 →</button>
+        </div>
+      </div>
+
+      <div class="materi-section" id="konten-5-3">
+        <h2 class="materi-judul">Bab 5 · Kerusakan Lingkungan</h2>
+        <p class="materi-subjudul">Subbab 5.3 · Dampak Berantai Kerusakan Lingkungan</p>
+        <div class="materi-teks">
+          <ul>
+            <li>Hutan gundul → banjir &amp; longsor (akar pohon tidak menyerap air).</li>
+            <li>Pencemaran laut → terumbu karang rusak → ikan tidak punya tempat bertelur → nelayan kekurangan hasil.</li>
+            <li>Udara kotor → ISPA; air kotor → diare dan penyakit kulit.</li>
+          </ul>
+        </div>
+        <div class="materi-nav">
+          <button class="btn btn-outline" onclick="tampilKonten('5-2')">← 5.2</button>
+          <button class="btn btn-primary" onclick="tampilKonten('5-4')">5.4 →</button>
+        </div>
+      </div>
+
+      <div class="materi-section" id="konten-5-4">
+        <h2 class="materi-judul">Bab 5 · Kerusakan Lingkungan</h2>
+        <p class="materi-subjudul">Subbab 5.4 · Cara Sederhana Mengatasi Kerusakan (Prinsip 3R)</p>
+        <div class="materi-teks">
+          <ul>
+            <li><strong>Reduce (Mengurangi):</strong> Mengurangi penggunaan plastik sekali pakai.</li>
+            <li><strong>Reuse (Gunakan Kembali):</strong> Menggunakan botol minum yang bisa diisi ulang.</li>
+            <li><strong>Recycle (Daur Ulang):</strong> Mengolah sampah plastik menjadi kerajinan atau barang berguna.</li>
+          </ul>
+        </div>
+        <div class="materi-nav">
+          <button class="btn btn-outline" onclick="tampilKonten('5-3')">← 5.3</button>
+          <button class="btn btn-primary" onclick="tampilKonten('6-1')">Bab 6 →</button>
+        </div>
+      </div>
+
+
+      <!-- ========== BAB 6 ========== -->
+      <div class="materi-section" id="konten-6-1">
+        <h2 class="materi-judul">Bab 6 · Pelestarian Lingkungan untuk Masa Depan</h2>
+        <p class="materi-subjudul">Subbab 6.1 · Mengapa Kita Harus Melestarikan Lingkungan?</p>
+
+        <div class="placeholder-konten">
+          <div class="ph-icon">📊</div>
+          <p>Slide Presentasi Bab 6 akan ditambahkan di sini.<br><em>[GANTI: Embed Canva Bab 6]</em></p>
+        </div>
+
+        <div class="materi-teks">
+          <p>Pelestarian lingkungan menjaga <strong>Daya Lenting</strong> alam. Manfaat lingkungan lestari:</p>
+          <ul>
+            <li><strong>Paru-paru Dunia:</strong> Hutan lestari menyediakan oksigen gratis.</li>
+            <li><strong>Tabungan Air:</strong> Akar pohon menyimpan air hujan agar tidak kekeringan.</li>
+            <li><strong>Warisan Generasi:</strong> Memastikan generasi mendatang masih bisa menikmati alam yang sehat.</li>
+          </ul>
+        </div>
+
+        <div class="video-wrapper">
+          <div class="video-label">🎬 Video Pembelajaran – Bab 6</div>
+          <div class="iframe-responsive">
+            <iframe src="https://www.youtube.com/embed/X8o94jA0I5A?si=DaShJfOYalBj6gko"
+              title="Video Bab 6" allowfullscreen
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          </div>
+        </div>
+
+        <div class="materi-nav">
+          <button class="btn btn-outline" onclick="tampilKonten('5-4')">← Bab 5</button>
+          <button class="btn btn-primary" onclick="tampilKonten('6-2')">6.2 →</button>
+        </div>
+      </div>
+
+      <div class="materi-section" id="konten-6-2">
+        <h2 class="materi-judul">Bab 6 · Pelestarian Lingkungan</h2>
+        <p class="materi-subjudul">Subbab 6.2 · Langkah Nyata di Sekolah dan Rumah</p>
+        <div class="materi-teks">
+          <h3>Reboisasi dan Penghijauan</h3>
+          <p>Menanam kembali hutan gundul (reboisasi) dan menanam pohon di lingkungan sekitar (penghijauan). Apotek hidup: menanam tanaman obat di pot atau pekarangan.</p>
+          <h3>Konservasi Sumber Daya Alam</h3>
+          <p>Hemat air (gunakan air bekas cucian untuk menyiram tanaman). Hemat energi berarti mengurangi pembakaran batubara dan polusi udara.</p>
+          <h3>Pengelolaan Sampah Bijak</h3>
+          <p>Sampah organik diolah jadi kompos. Sampah anorganik dipilah untuk bank sampah atau daur ulang.</p>
+        </div>
+        <div class="materi-nav">
+          <button class="btn btn-outline" onclick="tampilKonten('6-1')">← 6.1</button>
+          <button class="btn btn-primary" onclick="tampilKonten('6-3')">6.3 →</button>
+        </div>
+      </div>
+
+      <div class="materi-section" id="konten-6-3">
+        <h2 class="materi-judul">Bab 6 · Pelestarian Lingkungan</h2>
+        <p class="materi-subjudul">Subbab 6.3 · Memahami Prinsip 3R</p>
+        <div class="materi-teks">
+          <ul>
+            <li><strong>REDUCE:</strong> Mencegah sampah sebelum muncul. Contoh: Membawa tas belanja sendiri.</li>
+            <li><strong>REUSE:</strong> Memberi kesempatan kedua bagi barang. Contoh: Botol selai bekas dijadikan tempat pensil.</li>
+            <li><strong>RECYCLE:</strong> Mengubah bentuk barang. Contoh: Kertas bekas dijadikan bubur kertas dan kertas baru.</li>
+          </ul>
+        </div>
+        <div class="materi-nav">
+          <button class="btn btn-outline" onclick="tampilKonten('6-2')">← 6.2</button>
+          <button class="btn btn-primary" onclick="tampilKonten('6-4')">6.4 →</button>
+        </div>
+      </div>
+
+      <div class="materi-section" id="konten-6-4">
+        <h2 class="materi-judul">Bab 6 · Pelestarian Lingkungan</h2>
+        <p class="materi-subjudul">Subbab 6.4 · Sikap Peduli Lingkungan</p>
+        <div class="materi-teks">
+          <ul>
+            <li><strong>Berpikir Kritis:</strong> Sebelum membuang, pikirkan: "Bisa dipakai lagi tidak ya?"</li>
+            <li><strong>Tanggung Jawab:</strong> Ambil sampah berserakan meskipun bukan milikmu.</li>
+            <li><strong>Edukasi:</strong> Ajak teman untuk tidak merusak fasilitas umum dan pohon.</li>
+          </ul>
+        </div>
+        <div class="materi-nav">
+          <button class="btn btn-outline" onclick="tampilKonten('6-3')">← 6.3</button>
+          <button class="btn btn-primary" onclick="tampilKonten('7-1')">Bab 7 →</button>
+        </div>
+      </div>
+
+
+      <!-- ========== BAB 7 ========== -->
+      <div class="materi-section" id="konten-7-1">
+        <h2 class="materi-judul">Bab 7 · Manusia Sebagai Penjaga Kelestarian Alam</h2>
+        <p class="materi-subjudul">Subbab 7.1 · Peran Strategis Manusia</p>
+
+        <div class="placeholder-konten">
+          <div class="ph-icon">📊</div>
+          <p>Slide Presentasi Bab 7 akan ditambahkan di sini.<br><em>[GANTI: Embed Canva Bab 7]</em></p>
+        </div>
+
+        <div class="materi-teks">
+          <p>Manusia bertindak sebagai "Manager Lingkungan" di ekosistem:</p>
+          <ul>
+            <li><strong>Aksi Positif (Restorasi):</strong> Memperbaiki alam yang rusak, contoh: membuat terumbu karang buatan.</li>
+            <li><strong>Aksi Preventif (Pencegahan):</strong> Mencegah kerusakan sebelum terjadi, contoh: peraturan dilarang membuang limbah ke sungai.</li>
+          </ul>
+        </div>
+
+        <div class="video-wrapper">
+          <div class="video-label">🎬 Video Pembelajaran – Bab 7</div>
+          <div class="iframe-responsive">
+            <iframe src="https://www.youtube.com/embed/dV42KMoKJLM?si=mOyNa_cmsEA9hGP7"
+              title="Video Bab 7" allowfullscreen
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          </div>
+        </div>
+
+        <div class="materi-nav">
+          <button class="btn btn-outline" onclick="tampilKonten('6-4')">← Bab 6</button>
+          <button class="btn btn-primary" onclick="tampilKonten('7-2')">7.2 →</button>
+        </div>
+      </div>
+
+      <div class="materi-section" id="konten-7-2">
+        <h2 class="materi-judul">Bab 7 · Manusia &amp; Alam</h2>
+        <p class="materi-subjudul">Subbab 7.2 · Eco-Friendly Lifestyle</p>
+        <div class="materi-teks">
+          <ul>
+            <li><strong>Transportasi Hijau:</strong> Berjalan kaki, bersepeda, atau transportasi umum.</li>
+            <li><strong>Diet Ramah Lingkungan:</strong> Menghabiskan makanan agar tidak menjadi sampah organik penghasil gas metana.</li>
+            <li><strong>Hemat Plastik:</strong> Gunakan tas belanja kain yang bisa dipakai bertahun-tahun.</li>
+          </ul>
+        </div>
+        <div class="materi-nav">
+          <button class="btn btn-outline" onclick="tampilKonten('7-1')">← 7.1</button>
+          <button class="btn btn-primary" onclick="tampilKonten('7-3')">7.3 →</button>
+        </div>
+      </div>
+
+      <div class="materi-section" id="konten-7-3">
+        <h2 class="materi-judul">Bab 7 · Manusia &amp; Alam</h2>
+        <p class="materi-subjudul">Subbab 7.3 · Manfaat Jangka Panjang: Keberlanjutan</p>
+        <div class="materi-teks">
+          <h3>Jasa Ekosistem yang Kita Nikmati Gratis</h3>
+          <ul>
+            <li><strong>Jasa Penyediaan:</strong> Air minum, bahan bangunan, obat-obatan dari hutan.</li>
+            <li><strong>Jasa Pengaturan:</strong> Pohon mengatur suhu udara dan menyerap polusi.</li>
+            <li><strong>Jasa Budaya:</strong> Keindahan alam untuk wisata dan pembelajaran.</li>
+          </ul>
+          <p style="margin-top:16px; padding: 16px; background: var(--secondary-light); border-radius: var(--radius-md); color: var(--secondary-dark);">
+            🌱 <strong>Selamat!</strong> Kamu telah menyelesaikan semua materi pembelajaran ekosistem. Terus jaga semangat belajar dan cintai lingkungan!
+          </p>
+        </div>
+        <div class="materi-nav">
+          <button class="btn btn-outline" onclick="tampilKonten('7-2')">← 7.2</button>
+          <a href="index.html" class="btn btn-primary">🏠 Kembali ke Beranda</a>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Tombol toggle sidebar untuk mobile -->
+  <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle menu materi">📚</button>
+
+  <!-- JavaScript untuk halaman belajar -->
+  <script src="script.js"></script>
+  <script>
+    // =====================================================
+    // JavaScript khusus untuk belajar.html
+    // =====================================================
+
+    // ---- Toggle bab (expand/collapse subbab di sidebar) ----
+    const babHeaders = document.querySelectorAll('.bab-header');
+
+    babHeaders.forEach(function (header) {
+      header.addEventListener('click', function () {
+        // Ambil elemen bab induk
+        const babItem = this.parentElement;
+        // Toggle kelas 'open' untuk buka/tutup subbab
+        babItem.classList.toggle('open');
+      });
+    });
+
+    // ---- Fungsi tampilKonten: menampilkan section materi ----
+    function tampilKonten(id) {
+      // Sembunyikan semua section materi
+      const semuaKonten = document.querySelectorAll('.materi-section');
+      semuaKonten.forEach(function (el) {
+        el.classList.remove('aktif');
+      });
+
+      // Tampilkan section yang dipilih
+      const target = document.getElementById('konten-' + id);
+      if (target) {
+        target.classList.add('aktif');
+      }
+
+      // Tandai subbab yang aktif di sidebar
+      const semuaSubbab = document.querySelectorAll('.subbab-link');
+      semuaSubbab.forEach(function (link) {
+        link.classList.remove('active-subbab');
+        if (link.getAttribute('data-target') === id) {
+          link.classList.add('active-subbab');
+
+          // Buka bab induk agar subbab terlihat
+          const babItem = link.closest('.bab-item');
+          if (babItem) { babItem.classList.add('open'); }
+        }
+      });
+
+      // Scroll area konten ke atas
+      const kontenArea = document.getElementById('konten-area');
+      kontenArea.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Tutup sidebar di mobile setelah memilih
+      if (window.innerWidth < 768) {
+        document.getElementById('sidebar').classList.remove('sidebar-open');
+      }
+    }
+
+    // ---- Pasang event klik pada semua link subbab ----
+    const subbabLinks = document.querySelectorAll('.subbab-link');
+    subbabLinks.forEach(function (link) {
+      link.addEventListener('click', function () {
+        const id = this.getAttribute('data-target');
+        if (id) { tampilKonten(id); }
+      });
+    });
+
+    // ---- Toggle sidebar di mobile ----
+    const sidebarToggle = document.getElementById('sidebar-toggle');
+    const sidebar = document.getElementById('sidebar');
+
+    sidebarToggle.addEventListener('click', function () {
+      sidebar.classList.toggle('sidebar-open');
+    });
+
+    // Tutup sidebar saat klik di luar (mobile)
+    document.addEventListener('click', function (e) {
+      if (
+        window.innerWidth < 768 &&
+        !sidebar.contains(e.target) &&
+        !sidebarToggle.contains(e.target)
+      ) {
+        sidebar.classList.remove('sidebar-open');
+      }
+    });
+
+  </script>
 
 </body>
 </html>
