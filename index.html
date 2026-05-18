@@ -1,194 +1,430 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clash Of Ecosystem - Belajar Ekosistem Jadi Seru</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clash of Ecosystem – Media Pembelajaran Interaktif</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="container nav-container">
-            <a href="#" class="logo">Clash Of Ecosystem</a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#hero">Beranda</a></li>
-                <li><a href="#masalah">Masalah</a></li>
-                <li><a href="#solusi">Solusi</a></li>
-                <li><a href="#fitur">Fitur</a></li>
-                <li><a href="#akses">Akses</a></li>
-                <li><a href="#tim">Tim</a></li>
-            </ul>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+  <!-- ===================== NAVBAR ===================== -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <!-- Logo / Nama Produk -->
+      <a href="#hero" class="nav-logo">
+        <span class="logo-icon">🌿</span>
+        <span>Clash of <strong>Ecosystem</strong></span>
+      </a>
+
+      <!-- Menu navigasi desktop -->
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="#hero"    class="nav-link">Beranda</a></li>
+        <li><a href="#masalah" class="nav-link">Masalah</a></li>
+        <li><a href="#solusi"  class="nav-link">Solusi</a></li>
+        <li><a href="#fitur"   class="nav-link">Fitur</a></li>
+        <li><a href="#akses"   class="nav-link">Akses</a></li>
+        <li><a href="#tim"     class="nav-link">Tim</a></li>
+      </ul>
+
+      <!-- Tombol hamburger untuk mobile -->
+      <button class="hamburger" id="hamburger" aria-label="Buka menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" id="hero">
+    <div class="hero-container">
+      <!-- Kolom kiri: teks -->
+      <div class="hero-text fade-in">
+        <span class="hero-badge">🎓 Media Pembelajaran Interaktif</span>
+        <h1 class="hero-title">
+          Clash of <span class="highlight">Ecosystem</span>
+        </h1>
+        <p class="hero-tagline">Menjelajahi Keseimbangan Alam dalam Satu Ekosistem Digital</p>
+        <p class="hero-desc">
+          Clash of Ecosystem merupakan aplikasi pembelajaran interaktif yang dirancang untuk membantu
+          pengguna memahami keseimbangan alam dan hubungan antar makhluk hidup dalam suatu ekosistem.
+          Dengan tampilan modern, materi edukatif, serta fitur eksplorasi yang menarik.
+        </p>
+        <div class="hero-actions">
+          <a href="#akses" class="btn btn-primary">Mulai Belajar →</a>
+          <a href="#fitur" class="btn btn-outline">Lihat Fitur</a>
         </div>
-    </nav>
+      </div>
 
-    <section id="hero" class="hero-section">
-        <div class="container hero-grid">
-            <div class="hero-text">
-                <h1>Belajar Ekosistem Jadi Seru, Main Sambil Paham!</h1>
-                <p>Clash of Ecosystem adalah aplikasi permainan edukatif berbasis Android yang dirancang untuk membantu siswa SMP/MTs memahami konsep ekosistem secara interaktif dan menyenangkan.</p>
-                <a href="#akses" class="btn btn-primary">Coba Sekarang</a>
-            </div>
-            <div class="hero-image">
-                <img src="https://i.ibb.co.com/4ZHS2tL7/reading.png" alt="Tampilan Icon hero" onerror="this.src='https://via.placeholder.com/400x300?text=Gambar+Hero'">
-            </div>
+      <!-- Kolom kanan: gambar/ikon produk -->
+      <div class="hero-image fade-in">
+        <div class="hero-img-wrapper">
+          <img
+            src="https://i.ibb.co.com/hpp4gJM/sticker.png"
+            alt="Tampilan icon hero"
+            class="hero-img"
+            onerror="this.onerror=null; this.src=''; this.parentElement.classList.add('img-fallback'); this.parentElement.innerHTML='<span>🌱</span><p>Gambar belum ditambahkan</p>';"
+          />
         </div>
-    </section>
+      </div>
+    </div>
 
-    <section id="masalah" class="section-padding">
-        <div class="container">
-            <h2 class="section-title">Inovasi Pembelajaran Ekosistem Berbasis Game</h2>
-            <p class="section-desc">Pembelajaran konvensional seringkali terasa abstrak dan sulit divisualisasikan. Inilah tantangan yang kami hadapi:</p>
-            
-            <div class="grid-3">
-                <div class="card card-masalah">
-                    <h3>Metode Belajar</h3>
-                    <p>Bagaimana merancang media pembelajaran berbasis game yang efektif untuk siswa SMP/MTs?</p>
-                </div>
-                <div class="card card-masalah">
-                    <h3>Penyajian Materi</h3>
-                    <p>Bagaimana menyajikan rantai makanan dan interaksi makhluk hidup agar menarik bagi siswa?</p>
-                </div>
-                <div class="card card-masalah">
-                    <h3>Efektivitas</h3>
-                    <p>Bagaimana penggunaan Clash of Ecosystem dapat membantu siswa memahami konsep IPA secara optimal?</p>
-                </div>
-            </div>
+    <!-- Dekorasi latar belakang -->
+    <div class="hero-blob hero-blob-1"></div>
+    <div class="hero-blob hero-blob-2"></div>
+  </section>
 
-            <div class="target-box">
-                <h4>Target Pengguna:</h4>
-                <ul>
-                    <li><strong>Siswa SMP/MTs Kelas VII:</strong> Remaja usia 12–14 tahun.</li>
-                    <li><strong>Guru IPA:</strong> Sebagai media inovatif pengganti metode ceramah.</li>
-                </ul>
-            </div>
+  <!-- ===================== MASALAH ===================== -->
+  <section class="section masalah" id="masalah">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-badge">⚠️ Tantangan</span>
+        <h2>Kesulitan Pembelajaran Materi Ekosistem pada Siswa SMP/MTs</h2>
+        <p>
+          Dalam proses pembelajaran IPA, khususnya materi ekosistem, masih ditemukan berbagai kendala
+          yang menyebabkan siswa mengalami kesulitan dalam memahami konsep-konsep ekosistem secara optimal.
+        </p>
+      </div>
+
+      <!-- 3 Card masalah -->
+      <div class="cards-3 fade-in">
+
+        <div class="card card-masalah">
+          <div class="card-icon">📖</div>
+          <h3>Metode Konvensional</h3>
+          <p>
+            Metode pembelajaran yang masih menggunakan ceramah dan buku teks membuat materi ekosistem
+            kurang menarik dan sulit dipahami oleh siswa.
+          </p>
         </div>
-    </section>
 
-    <section id="solusi" class="section-padding bg-alt">
-        <div class="container grid-2">
-            <div class="solusi-image">
-                <img src="https://i.ibb.co.com/pBXhQcVq/idea.png" alt="GAMBAR SOLUSI" onerror="this.src='https://via.placeholder.com/400x300?text=Gambar+Solusi'">
-            </div>
-            <div class="solusi-text">
-                <h2 class="section-title" style="text-align: left;">Solusi: Clash Of Ecosystem</h2>
-                <p>Kami menghadirkan aplikasi Game-Based Learning yang mengubah informasi pasif menjadi keterlibatan aktif. Siswa belajar melalui visualisasi nyata dan sistem skor yang memotivasi.</p>
-                <ul class="benefit-list">
-                    <li>Memahami ekologi dengan cara interaktif.</li>
-                    <li>Media alternatif penyampai materi IPA.</li>
-                    <li>Proses belajar yang efektif dan kreatif.</li>
-                </ul>
-            </div>
+        <div class="card card-masalah">
+          <div class="card-icon">🧩</div>
+          <h3>Konsep yang Abstrak</h3>
+          <p>
+            Konsep ekosistem seperti rantai makanan, jaring-jaring makanan, dan interaksi antar makhluk
+            hidup bersifat abstrak sehingga siswa kesulitan memvisualisasikan dan memahaminya.
+          </p>
         </div>
-    </section>
 
-    <section id="fitur" class="section-padding">
-        <div class="container">
-            <h2 class="section-title">Fitur Utama</h2>
-            <p class="section-desc">Fitur-fitur interaktif yang kami tawarkan</p>
-            <div class="grid-3">
-                <div class="card">
-                    <div class="icon-placeholder">📚</div>
-                    <h3>Materi Ekosistem</h3>
-                    <p>Penjelasan ringkas tentang rantai makanan dan keseimbangan lingkungan.</p>
-                </div>
-                <div class="card">
-                    <div class="icon-placeholder">🎮</div>
-                    <h3>Game Rantai Makanan</h3>
-                    <p>Menyusun urutan produsen hingga konsumen secara benar.</p>
-                </div>
-                <div class="card">
-                    <div class="icon-placeholder">⚔️</div>
-                    <h3>Mini Challenge</h3>
-                    <p>Kuis pilihan ganda dan tantangan seru untuk menguji pemahaman.</p>
-                </div>
-                <div class="card">
-                    <div class="icon-placeholder">🏆</div>
-                    <h3>Poin & Level</h3>
-                    <p>Dapatkan poin dan naikkan level setiap kali menyelesaikan tugas.</p>
-                </div>
-                <div class="card">
-                    <div class="icon-placeholder">📊</div>
-                    <h3>Progres Belajar</h3>
-                    <p>Pantau skor dan materi yang telah kamu selesaikan.</p>
-                </div>
-            </div>
+        <div class="card card-masalah">
+          <div class="card-icon">🎮</div>
+          <h3>Kurang Media Interaktif</h3>
+          <p>
+            Kurangnya media pembelajaran interaktif berbasis permainan yang dapat meningkatkan minat,
+            motivasi, dan keterlibatan siswa dalam belajar materi ekosistem.
+          </p>
         </div>
-    </section>
 
-    <section id="akses" class="section-padding bg-accent">
-        <div class="container text-center">
-            <h2 class="section-title">Akses Produk</h2>
-            <p class="section-desc">Siap mencoba aplikasi kami?</p>
-            <div class="demo-buttons">
-                <a href="#" class="demo-img-link">
-                    <img src="https://i.ibb.co.com/bMZWM2xg/tombol.png" alt="Tombol Download" style="max-width: 200px;">
-                </a>
-                <a href="belajar.html" class="btn btn-secondary">Lihat Demo Web</a>
-            </div>
+      </div>
+
+      <!-- Target pengguna -->
+      <div class="target-user fade-in">
+        <p>🎯 <strong>Target Pengguna:</strong> Siswa SMP/MTs kelas VII usia 12–14 tahun dan guru mata pelajaran IPA sebagai media pembelajaran pendukung.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SOLUSI ===================== -->
+  <section class="section solusi" id="solusi">
+    <div class="container">
+      <div class="solusi-grid fade-in">
+
+        <!-- Kolom gambar -->
+        <div class="solusi-image">
+          <div class="solusi-img-wrapper">
+            <img
+              src="https://i.ibb.co.com/mddn3cp/business.png"
+              alt="Gambar solusi"
+              class="solusi-img"
+              onerror="this.onerror=null; this.src=''; this.parentElement.classList.add('img-fallback'); this.parentElement.innerHTML='<span>💡</span><p>Gambar belum ditambahkan</p>';"
+            />
+          </div>
         </div>
-    </section>
 
-    <section id="tim" class="section-padding">
-        <div class="container">
-            <h2 class="section-title">Tim Pengembang</h2>
-            <p class="section-desc">Kolaborasi untuk inovasi pendidikan digital.</p>
-            <div class="grid-4">
-                <div class="card-team">
-                    <img src="https://i.ibb.co.com/gZzrKNXH/foto-brayy.jpg" alt="foto brayen" class="team-img" onerror="this.src='https://via.placeholder.com/150?text=Foto'">
-                    <h4>Brayen Wanda</h4>
-                    <p>Pengembang Aplikasi</p>
-                </div>
-                <div class="card-team">
-                    <img src="https://i.ibb.co.com/VYFgM0M3/foto-martin.jpg" alt="foto rakha" class="team-img" onerror="this.src='https://via.placeholder.com/150?text=Foto'">
-                    <h4>Rakha Sepniano</h4>
-                    <p>Pengembang Aplikasi</p>
-                </div>
-                <div class="card-team">
-                    <img src="https://i.ibb.co.com/v4pHMkJf/foto-fahim.jpg" alt="foto fahim" class="team-img" onerror="this.src='https://via.placeholder.com/150?text=Foto'">
-                    <h4>Fahim Muntaha Ilma</h4>
-                    <p>Design Aplikasi</p>
-                </div>
-                <div class="card-team">
-                    <img src="https://i.ibb.co.com/cdLY9Tt/Whats-App-Image-2026-04-30-at-22-13-38.jpg" alt="foto rizky" class="team-img" onerror="this.src='https://via.placeholder.com/150?text=Foto'">
-                    <h4>Rizky Aldi Saputra</h4>
-                    <p>Design Aplikasi</p>
-                </div>
-            </div>
-            <div class="grid-3" style="margin-top: 2rem;">
-                <div class="card-team">
-                    <img src="https://i.ibb.co.com/rRyhMTX2/foto-andin.jpg" alt="foto andiniarti" class="team-img" onerror="this.src='https://via.placeholder.com/150?text=Foto'">
-                    <h4>Andiniarti</h4>
-                    <p>Content Developer</p>
-                </div>
-                <div class="card-team">
-                    <img src="https://i.ibb.co.com/nqRSckTH/foto-isnaini.jpg" alt="foto isnaini" class="team-img" onerror="this.src='https://via.placeholder.com/150?text=Foto'">
-                    <h4>Isnaini Noor Azizah</h4>
-                    <p>Content Developer</p>
-                </div>
-                <div class="card-team">
-                    <img src="https://i.ibb.co.com/Xf0twFd3/foto-kesa.jpg" alt="foto keisya" class="team-img" onerror="this.src='https://via.placeholder.com/150?text=Foto'">
-                    <h4>Keisya Yazna Fiersahira</h4>
-                    <p>Content Developer</p>
-                </div>
-            </div>
+        <!-- Kolom teks -->
+        <div class="solusi-text">
+          <span class="section-badge">✅ Solusi</span>
+          <h2>Pengembangan Aplikasi Edukasi Clash of Ecosystem Berbasis Game Interaktif</h2>
+          <p>
+            Clash of Ecosystem merupakan aplikasi pembelajaran berbasis game edukatif yang dirancang untuk
+            membantu siswa SMP/MTs memahami materi ekosistem secara lebih menarik, interaktif, dan mudah
+            dipahami. Aplikasi ini menggabungkan unsur pembelajaran dan permainan (game-based learning).
+          </p>
+          <p>
+            <strong>Cara Kerja:</strong> Siswa menggunakan aplikasi melalui gadget untuk mempelajari materi
+            ekosistem, memainkan game rantai makanan, menyelesaikan mini challenge, menjawab kuis interaktif,
+            serta mengumpulkan poin dan level.
+          </p>
+
+          <!-- Manfaat -->
+          <ul class="manfaat-list">
+            <li>
+              <span class="check">✓</span>
+              Membantu siswa memahami konsep ekosistem yang abstrak melalui visualisasi dan permainan interaktif.
+            </li>
+            <li>
+              <span class="check">✓</span>
+              Meningkatkan minat, motivasi, dan keterlibatan siswa dalam proses pembelajaran IPA.
+            </li>
+            <li>
+              <span class="check">✓</span>
+              Menjadi media pembelajaran alternatif yang inovatif dan fleksibel untuk digunakan di dalam maupun di luar kelas.
+            </li>
+          </ul>
         </div>
-    </section>
 
-    <footer class="footer">
-        <div class="container">
-            <p><strong>Clash Of Ecosystem Kelompok 3</strong></p>
-            <p>Program Studi Pendidikan Agama Islam – Universitas Muhammadiyah Yogyakarta</p>
-            <p>Tahun 2026-2027</p>
-            <small>Dikembangkan dalam Mata Kuliah Pengembangan Aplikasi Pembelajaran.</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FITUR ===================== -->
+  <section class="section fitur" id="fitur">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-badge">⚡ Fitur</span>
+        <h2>Fitur Utama Clash of Ecosystem</h2>
+        <p>
+          Aplikasi Clash of Ecosystem dilengkapi dengan berbagai fitur interaktif yang dirancang untuk
+          membantu siswa memahami materi ekosistem secara lebih menarik, menyenangkan, dan mudah dipahami
+          melalui konsep pembelajaran berbasis permainan edukatif.
+        </p>
+      </div>
+
+      <!--
+        Susunan card fitur: 3 di atas, 2 di bawah
+        Menggunakan grid dengan kelas khusus
+      -->
+      <div class="fitur-grid fade-in">
+
+        <div class="card card-fitur">
+          <div class="card-icon fitur-icon">📚</div>
+          <h3>Materi Ekosistem</h3>
+          <p>
+            Menyediakan penjelasan materi mengenai ekosistem, komponen penyusun ekosistem, rantai makanan,
+            jaring-jaring makanan, interaksi antar makhluk hidup, keseimbangan lingkungan, serta pelestarian
+            lingkungan dengan tampilan visual yang menarik.
+          </p>
         </div>
-    </footer>
 
-    <script src="script.js"></script>
+        <div class="card card-fitur">
+          <div class="card-icon fitur-icon">🦁</div>
+          <h3>Game Rantai Makanan</h3>
+          <p>
+            Permainan edukatif yang mengajak siswa menyusun urutan rantai makanan dari produsen hingga
+            konsumen secara benar untuk melatih pemahaman konsep ekosistem.
+          </p>
+        </div>
+
+        <div class="card card-fitur">
+          <div class="card-icon fitur-icon">⚔️</div>
+          <h3>Mini Challenge & Clash</h3>
+          <p>
+            Berisi tantangan interaktif dan soal pilihan ganda yang dirancang untuk menguji pemahaman
+            siswa terhadap materi ekosistem melalui sistem permainan yang seru dan kompetitif.
+          </p>
+        </div>
+
+        <div class="card card-fitur">
+          <div class="card-icon fitur-icon">🏆</div>
+          <h3>Poin & Level</h3>
+          <p>
+            Sistem penghargaan berupa poin dan level yang diperoleh siswa setelah menyelesaikan permainan
+            atau kuis untuk meningkatkan motivasi belajar.
+          </p>
+        </div>
+
+        <div class="card card-fitur">
+          <div class="card-icon fitur-icon">📊</div>
+          <h3>Progres Belajar</h3>
+          <p>
+            Menampilkan perkembangan belajar siswa, seperti skor permainan, level yang telah dicapai,
+            serta materi yang sudah dipelajari dan diselesaikan.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== AKSES PRODUK ===================== -->
+  <section class="section akses" id="akses">
+    <div class="container">
+      <div class="akses-wrapper fade-in">
+        <span class="section-badge">🚀 Akses Materi</span>
+        <h2>Mulai Belajar Sekarang!</h2>
+        <p>
+          Klik tombol di bawah untuk mulai menjelajahi materi pembelajaran ekosistem yang interaktif
+          dan menyenangkan bersama Clash of Ecosystem.
+        </p>
+
+        <!-- Tombol akses -->
+        <div class="akses-buttons">
+          <a href="belajar.html" class="btn btn-accent btn-large">
+            <img
+              src="https://i.ibb.co.com/VYXXxn29/frog.png"
+              alt="Akses Materi"
+              class="btn-img"
+              onerror="this.style.display='none'"
+            />
+            <span>Akses Materi Pembelajaran</span>
+          </a>
+        </div>
+
+        <p class="akses-note">Gratis · Tanpa Login · Langsung Bisa Digunakan</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TIM ===================== -->
+  <section class="section tim" id="tim">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-badge">👨‍🔬 Tim Kami</span>
+        <h2>Tim Ilmuan Muda</h2>
+        <p>
+          Tim Ilmuan Muda merupakan tim pengembang aplikasi pembelajaran Clash of Ecosystem yang terdiri
+          dari mahasiswa Program Studi Pendidikan Agama Islam Universitas Muhammadiyah Yogyakarta. Tim ini
+          bekerja sama dalam merancang media pembelajaran berbasis game edukatif yang inovatif, interaktif,
+          dan mudah dipahami oleh siswa SMP/MTs.
+        </p>
+      </div>
+
+      <!--
+        Susunan card anggota: 4 di atas, 3 di bawah
+        Diatur menggunakan kelas khusus di CSS
+      -->
+      <div class="tim-grid fade-in">
+
+        <!-- Anggota 1 -->
+        <div class="card card-tim">
+          <div class="tim-foto-wrapper">
+            <img
+              src="https://i.ibb.co.com/d0YrPgKy/Whats-App-Image-2026-05-10-at-07-40-26.jpg"
+              alt="foto Fahim Muntaha Ilma"
+              class="tim-foto"
+              onerror="this.onerror=null; this.src=''; this.parentElement.classList.add('foto-fallback'); this.parentElement.innerHTML='👤';"
+            />
+          </div>
+          <h3>Fahim Muntaha Ilma</h3>
+          <span class="tim-peran">Desain Website</span>
+        </div>
+
+        <!-- Anggota 2 -->
+        <div class="card card-tim">
+          <div class="tim-foto-wrapper">
+            <img
+              src="https://i.ibb.co.com/gZzrKNXH/foto-brayy.jpg"
+              alt="foto Brayen Wanda Syofa Diputra"
+              class="tim-foto"
+              onerror="this.onerror=null; this.src=''; this.parentElement.classList.add('foto-fallback'); this.parentElement.innerHTML='👤';"
+            />
+          </div>
+          <h3>Brayen Wanda Syofa Diputra</h3>
+          <span class="tim-peran">Konten Game</span>
+        </div>
+
+        <!-- Anggota 3 -->
+        <div class="card card-tim">
+          <div class="tim-foto-wrapper">
+            <img
+              src="https://i.ibb.co.com/VYFgM0M3/foto-martin.jpg"
+              alt="foto Rakha Sepniano"
+              class="tim-foto"
+              onerror="this.onerror=null; this.src=''; this.parentElement.classList.add('foto-fallback'); this.parentElement.innerHTML='👤';"
+            />
+          </div>
+          <h3>Rakha Sepniano</h3>
+          <span class="tim-peran">Editor Video</span>
+        </div>
+
+        <!-- Anggota 4 -->
+        <div class="card card-tim">
+          <div class="tim-foto-wrapper">
+            <img
+              src="https://i.ibb.co.com/Y40CqGcY/Whats-App-Image-2026-04-30-at-22-13-38.jpg"
+              alt="foto Rizky Aldi Saputra"
+              class="tim-foto"
+              onerror="this.onerror=null; this.src=''; this.parentElement.classList.add('foto-fallback'); this.parentElement.innerHTML='👤';"
+            />
+          </div>
+          <h3>Rizky Aldi Saputra</h3>
+          <span class="tim-peran">Editor Video</span>
+        </div>
+
+        <!-- Anggota 5 -->
+        <div class="card card-tim">
+          <div class="tim-foto-wrapper">
+            <img
+              src="https://i.ibb.co.com/rRyhMTX2/foto-andin.jpg"
+              alt="foto Andiniarti"
+              class="tim-foto"
+              onerror="this.onerror=null; this.src=''; this.parentElement.classList.add('foto-fallback'); this.parentElement.innerHTML='👤';"
+            />
+          </div>
+          <h3>Andiniarti</h3>
+          <span class="tim-peran">Konten Quiz</span>
+        </div>
+
+        <!-- Anggota 6 -->
+        <div class="card card-tim">
+          <div class="tim-foto-wrapper">
+            <img
+              src="https://i.ibb.co.com/nqRSckTH/foto-isnaini.jpg"
+              alt="foto Isnaini Noor Azizah"
+              class="tim-foto"
+              onerror="this.onerror=null; this.src=''; this.parentElement.classList.add('foto-fallback'); this.parentElement.innerHTML='👤';"
+            />
+          </div>
+          <h3>Isnaini Noor Azizah</h3>
+          <span class="tim-peran">Konten Materi</span>
+        </div>
+
+        <!-- Anggota 7 -->
+        <div class="card card-tim">
+          <div class="tim-foto-wrapper">
+            <img
+              src="https://i.ibb.co.com/Xf0twFd3/foto-kesa.jpg"
+              alt="foto Keisya Yazna fiersahira"
+              class="tim-foto"
+              onerror="this.onerror=null; this.src=''; this.parentElement.classList.add('foto-fallback'); this.parentElement.innerHTML='👤';"
+            />
+          </div>
+          <h3>Keisya Yazna Fiersahira</h3>
+          <span class="tim-peran">Konten PPT</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <span class="logo-icon">🌿</span>
+          <strong>Clash of Ecosystem</strong>
+        </div>
+        <p class="footer-tagline">
+          "Clash of Ecosystem" – Media Pembelajaran Interaktif Berbasis Game Edukasi
+          untuk Meningkatkan Pemahaman Ekosistem Siswa SMP/MTs.
+        </p>
+        <p class="footer-info">
+          <strong>Tim Ilmuan Muda</strong> ·
+          Program Studi Pendidikan Agama Islam – Universitas Muhammadiyah Yogyakarta ·
+          2026–2027
+        </p>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026–2027 Tim Ilmuan Muda · Clash of Ecosystem · UMY</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Link ke file JavaScript -->
+  <script src="script.js"></script>
+
 </body>
 </html>
